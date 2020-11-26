@@ -9,7 +9,7 @@
 # If you hit the Error: EACCES: permission denied,
 # then try "mkdir output && chown 1000 output"
 
-FROM alpine:edge
+FROM alpine:3.10
 
 LABEL maintainer="Robert Riemann <robert.riemann@edps.europa.eu>"
 
@@ -21,8 +21,9 @@ LABEL org.label-schema.description="Website Evidence Collector running in a tiny
       org.label-schema.license="EUPL-1.2"
 
 # Installs latest Chromium (77) package.
-RUN apk add --no-cache \
-      chromium \
+RUN apk add --no-cache --update-cache --repository http://nl.alpinelinux.org/alpine/v3.8/main alsa-lib-dev=1.1.6-r0
+RUN apk add  \
+      chromium~=77.0.3865 \ 
       nss \
       freetype \
       freetype-dev \
@@ -30,7 +31,7 @@ RUN apk add --no-cache \
       ca-certificates \
       ttf-freefont \
       nodejs \
-      yarn~=1.22.10 \
+      yarn~=1.16 \
 # Packages linked to testssl.sh
       bash procps drill coreutils libidn curl \
 # Toolbox for advanced interactive use of WEC in container
